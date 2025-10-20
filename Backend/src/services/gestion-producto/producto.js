@@ -23,7 +23,6 @@ export class ProductoServicio {
         ],
         order: [['id', 'DESC']]
       })
-      if (productos.length === 0) return { error: 'no hay productos' }
       const DtoProductos = productos.map((producto) => {
         return {
           id: producto.id,
