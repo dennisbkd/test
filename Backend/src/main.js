@@ -51,19 +51,6 @@ const App = ({
     })
   )
 
-  // ✅ responde manualmente las preflight OPTIONS
-  app.options('*', cors({
-    origin: allowedOrigins,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
-  }))
-
-  app.use((req, res, next) => {
-    console.log('CORS Check:', req.method, req.headers.origin)
-    next()
-  })
-
   db()
 
   // rutas
