@@ -13,7 +13,7 @@ import { rutaVariante } from './router/variante.js'
 import { decodificarToken } from '../middleware/descodificarToken.js'
 import { rutaBitacora } from './router/bitacora.js'
 
-export const App = ({
+const App = ({
   usuarioServicio,
   autorizacionServicio,
   rolServicio,
@@ -59,3 +59,5 @@ export const App = ({
   //   console.log(`Example app listening on port ${port}`)
   // })
 }
+
+export default App

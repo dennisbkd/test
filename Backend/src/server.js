@@ -1,4 +1,4 @@
-import { App } from './main.js'
+import App from './main.js'
 import { UsuarioServicio } from './services/usuario.js'
 import { Rol, Usuario, Bitacora, Categoria, Proveedor, Producto, ProductoVariante, Compra, DetalleCompra } from './models/index.js'
 import { AutorizacionServicio } from './services/Auth/autorizacion.js'
