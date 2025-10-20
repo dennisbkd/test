@@ -30,11 +30,11 @@ export const GestionProducto = () => {
   const { modal: modalVariante, formConfigVariante, guardarVariante } = useFormVariante()
 
   const {
-    productos,
+    productos = [],
     isLoading,
     isError,
     toggleEstadoProducto,
-    categoriasActivas,
+    categoriasActivas = [],
     eliminarProducto,
     procesoCambiando,
     estaCambiandoProducto

@@ -32,7 +32,7 @@ const opcionesGenero = [
 
 export const GestionCategoria = () => {
   const {
-    categorias,
+    categorias = [],
     isLoading,
     error,
     toggleEstadoCategoria,
@@ -50,7 +50,7 @@ export const GestionCategoria = () => {
   })
 
   // Filtrar categorías
-  const categoriasFiltradas = categorias.filter(categoria => {
+  const categoriasFiltradas = categorias?.filter(categoria => {
     const coincideBusqueda = categoria.nombre
       .toLowerCase()
       .includes(filtros.searchTerm.toLowerCase()) ||
