@@ -25,7 +25,6 @@ export const App = ({
   compraServicio
 }) => {
   const app = express()
-  const port = 3000
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(cors({
@@ -44,7 +43,7 @@ export const App = ({
   app.use('/variantes', decodificarToken, rutaVariante({ varianteServicio }))
   app.use('/compras', decodificarToken, rutaCompra({ compraServicio, bitacoraServicio }))
   app.use('/bitacora', rutaBitacora({ bitacoraServicio }))
-  app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })
+  // app.listen(port, () => {
+  //   console.log(`Example app listening on port ${port}`)
+  // })
 }
