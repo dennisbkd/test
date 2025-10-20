@@ -1,7 +1,7 @@
 import axios from "axios";
 
  const instancia = axios.create({
-  baseURL: 'https://test-lime-phi-57.vercel.app',
+  baseURL: 'https://test-beige-three-68.vercel.app',
   withCredentials: true
 })
 
