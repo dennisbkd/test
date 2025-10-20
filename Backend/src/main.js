@@ -34,7 +34,7 @@ export const App = ({
 
   app.use(cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true) // permite requests sin origin (ej. Postman)
+      if (!origin) return callback(null, true) // permite Postman/curl
       if (allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
         callback(null, true)
       } else {
