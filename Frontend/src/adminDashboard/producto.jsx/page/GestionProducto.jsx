@@ -180,6 +180,38 @@ export const GestionProducto = () => {
             varianteEnProceso={varianteEnProceso}
           />
         ))}
+        {ProductosFiltrados.length === 0 && !isLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-xl shadow-lg p-8 text-center"
+          >
+            <div className="text-gray-500 text-lg mb-2">
+              {filtros.searchTerm || filtros.filtroEstado !== 'todos'
+                ? 'No se encontraron productos con los filtros aplicados'
+                : 'No hay productos registrados'
+              }
+            </div>
+            {filtros.searchTerm || filtros.filtroEstado !== 'todos' ? (
+              <button
+                onClick={() => {
+                  actualizarFiltro('searchTerm', '')
+                  actualizarFiltro('filtroEstado', 'todos')
+                }}
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Limpiar filtros
+              </button>
+            ) : (
+              <BotonAccion
+                label="Agregar primer producto"
+                onClick={() => modal.abrir()}
+                icon={Plus}
+                className="mt-4"
+              />
+            )}
+          </motion.div>
+        )}
       </div>
       <VisualizarDetalle
         isOpen={isOpen}
