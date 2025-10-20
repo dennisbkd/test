@@ -27,8 +27,20 @@ export const App = ({
   const app = express()
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  const allowedOrigins = [
+    'http://localhost:5173', // dev local
+    'https://test-d3f1.vercel.app' // dominio estable de frontend
+  ]
+
   app.use(cors({
-    origin: 'https://test-d3f1.vercel.app',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true) // permite requests sin origin (ej. Postman)
+      if (allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
     credentials: true
   }))
 
