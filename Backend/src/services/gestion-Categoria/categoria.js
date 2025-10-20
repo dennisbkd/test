@@ -9,9 +9,6 @@ export class CategoriaServicio {
       const categorias = await this.modeloCategoria.findAll({
         attributes: ['id', 'nombre', 'descripcion', 'genero', 'activo', 'createdAt']
       })
-
-      if (categorias.length === 0) return { error: 'No hay categorías registradas' }
-
       const categoriasDto = categorias.map(cat => {
         const hora = new Date(cat.createdAt).toISOString().substring(11, 16)
         const fecha = cat.createdAt.toISOString().split('T')[0]

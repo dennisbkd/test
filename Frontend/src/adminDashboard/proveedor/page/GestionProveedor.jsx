@@ -23,7 +23,7 @@ import { useProveedorForm } from "../hooks/useProveedorForm"
 
 export const GestionProveedor = () => {
   const {
-    proveedores,
+    proveedores = [],
     isLoading,
     error,
     toggleEstadoProveedor,
