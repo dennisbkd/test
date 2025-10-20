@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { db } from '../config/baseDatos.js'
 import { rutaUsuario } from './router/usuario.js'
 import { rutaAutorizacion } from './router/autorizacion.js'
@@ -6,12 +7,10 @@ import { rutaRol } from './router/rol.js'
 import { rutaCategoria } from './router/categoria.js'
 import { rutaProveedor } from './router/preoveedor.js'
 import { rutaCompra } from './router/compra.js'
-
-import cors from 'cors'
 import { rutaProducto } from './router/producto.js'
 import { rutaVariante } from './router/variante.js'
-import { decodificarToken } from '../middleware/descodificarToken.js'
 import { rutaBitacora } from './router/bitacora.js'
+import { decodificarToken } from '../middleware/descodificarToken.js'
 
 const App = ({
   usuarioServicio,
@@ -27,25 +26,47 @@ const App = ({
   const app = express()
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+
+  // ✅ lista de dominios permitidos (frontend)
   const allowedOrigins = [
-    'http://localhost:5173', // dev local
-    'https://test-d3f1.vercel.app' // dominio estable de frontend
+    'http://localhost:5173',
+    'https://test-d3f1.vercel.app',
+    'https://test-d3f1-pdes0x9c1-dennis-projects-b90ec4aa.vercel.app'
   ]
 
-  app.use(cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true) // permite Postman/curl
-      if (allowedOrigins.includes(origin) || /\.vercel\.app$/.test(origin)) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
-    credentials: true
+  // ✅ configuración CORS
+  app.use(
+    cors({
+      origin: function (origin, callback) {
+        if (!origin) return callback(null, true)
+        if (allowedOrigins.includes(origin)) {
+          return callback(null, true)
+        } else {
+          return callback(new Error('Not allowed by CORS'))
+        }
+      },
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+      credentials: true
+    })
+  )
+
+  // ✅ responde manualmente las preflight OPTIONS
+  app.options('*', cors({
+    origin: allowedOrigins,
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
   }))
+
+  app.use((req, res, next) => {
+    console.log('CORS Check:', req.method, req.headers.origin)
+    next()
+  })
 
   db()
 
+  // rutas
   app.use('/usuario', decodificarToken, rutaUsuario({ usuarioServicio }))
   app.use('/autorizacion', rutaAutorizacion({ autorizacionServicio }))
   app.use('/rol', decodificarToken, rutaRol({ rolServicio, bitacoraServicio }))
@@ -55,9 +76,8 @@ const App = ({
   app.use('/variantes', decodificarToken, rutaVariante({ varianteServicio }))
   app.use('/compras', decodificarToken, rutaCompra({ compraServicio, bitacoraServicio }))
   app.use('/bitacora', rutaBitacora({ bitacoraServicio }))
-  // app.listen(port, () => {
-  //   console.log(`Example app listening on port ${port}`)
-  // })
+
+  return app
 }
 
 export default App
