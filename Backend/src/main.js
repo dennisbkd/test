@@ -28,7 +28,7 @@ export const App = ({
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(cors({
-    origin: 'http://test-d3f1.vercel.app',
+    origin: 'https://test-d3f1.vercel.app',
     credentials: true
   }))
 
