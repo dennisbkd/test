@@ -24,6 +24,8 @@ const App = ({
   compraServicio
 }) => {
   const app = express()
+  const port = process.env.PORT || 3000
+
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
 
@@ -63,7 +65,9 @@ const App = ({
   app.use('/variantes', decodificarToken, rutaVariante({ varianteServicio }))
   app.use('/compras', decodificarToken, rutaCompra({ compraServicio, bitacoraServicio }))
   app.use('/bitacora', rutaBitacora({ bitacoraServicio }))
-
+  app.listen(port, () => {
+    console.log(`Servidor ejecutándose en el puerto ${port}`)
+  })
   return app
 }
 

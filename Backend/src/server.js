@@ -1,4 +1,3 @@
-import App from './main.js'
 import { UsuarioServicio } from './services/usuario.js'
 import { Rol, Usuario, Bitacora, Categoria, Proveedor, Producto, ProductoVariante, Compra, DetalleCompra } from './models/index.js'
 import { AutorizacionServicio } from './services/Auth/autorizacion.js'
@@ -13,6 +12,7 @@ import { ProductoServicio } from './services/gestion-producto/producto.js'
 import { VarianteServicio } from './services/gestion-producto/variante.js'
 import { CompraServicio } from './services/gestion-compra/compra.js'
 import sequelize from '../config/baseDatos.js'
+import App from './main.js'
 
 const usuarioServicio = new UsuarioServicio(
   {
